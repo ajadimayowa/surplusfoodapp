@@ -1,0 +1,33 @@
+export const Adverts = [
+  {
+    id: Math.random(),
+    bgColor: "",
+    title1: "Amazing Bonuses for",
+    title2: "Pioneer Users",
+    title1Color: "#FBAF57",
+    title2Color:"#fff",
+    desc: "The first 100 users only!!!",
+    descColor: "#fff",
+    imageLink: "",
+  },
+  {
+    id: Math.random(),
+    bgColor: "",
+    title1: "Instant delivery",
+    title2: "Pioneer Users",
+    title1Color: "#FBAF57",
+    title2Color: "#FBAF57",
+    desc: "",
+    imageLink: "",
+  },
+  {
+    id: Math.random(),
+    bgColor: "",
+    title1: "Amazing Bonuses for",
+    title2: "Pioneer Users",
+    title1Color: "#FBAF57",
+    title2Color: "#FBAF57",
+    desc: "",
+    imageLink: "",
+  },
+];
