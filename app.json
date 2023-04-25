@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kingfloat.surplusfoodapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "45c50dbe-23c3-4ae6-b8ff-b0152f5bc67e"
+      }
     }
   }
 }
