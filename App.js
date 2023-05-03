@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TabNavs } from './screens/tabs/tabNavigations';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { SignUpScreen } from './screens/SignUp';
 
 
 
@@ -32,7 +33,10 @@ export default function App() {
       <stack.Navigator>
         <stack.Screen options={{
           headerShown:false
-        }} name='Home' component={TabNavs}/>
+        }} name='HomePage' component={TabNavs}/>
+        <stack.Screen options={{
+          title:'Register'
+        }} name='signup' component={SignUpScreen}/>
       </stack.Navigator>
     </NavigationContainer>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Adverts } from "../../assets/contents";
 import AdCard from "../../assets/components/advertCard";
 import { Ionicons } from '@expo/vector-icons';
@@ -10,11 +10,11 @@ import provision from '../../assets/images/provision.png';
 import rice from '../../assets/images/rice.png';
 import { useLayoutEffect } from "react";
 import SelectDropdown from "react-native-select-dropdown";
+import Modal from "react-native-modal"
+import LoginModal from "../../assets/components/modals/loginModal";
+import SignInModal from "../../assets/components/modals/signInModal";
 
-import {View,FlatList,SafeAreaView,Text,StyleSheet,
-  ActivityIndicator,
-  ScrollView,
-  Image,
+import {View,FlatList,SafeAreaView,Text,StyleSheet,ActivityIndicator,ScrollView,Image,
   Button,
   Pressable,
   TextInput,
@@ -43,6 +43,22 @@ import { colors } from "../../assets/constants/colors";
 
 
 export function Home({navigation}) {
+const [loginModal,setLoginModal] = useState(false);
+const [signInModal,setSignInModal] = useState(false);
+
+const handleUserLogin = ()=>{
+  setLoginModal(true);
+}
+
+const userSignin =()=>{
+  setSignInModal(true)
+}
+
+const handleEmailLogin = ()=>{
+  setLoginModal(false);
+  setSignInModal(true);
+}
+
   useLayoutEffect(()=>{
     navigation.setOptions({
       headerTitle: '',
@@ -86,6 +102,9 @@ export function Home({navigation}) {
     })
   },[navigation])
   return (
+    <>
+    <LoginModal on={loginModal} off={()=>setLoginModal(false)} emailSin={handleEmailLogin}/>
+    <SignInModal on={signInModal} off={()=>setSignInModal(false)}/>
     <SafeAreaView style={page.container}>
       <FlatList
         showsHorizontalScrollIndicator={false}
@@ -98,6 +117,7 @@ export function Home({navigation}) {
       />
       
       <ScrollView style={[page.scroll]}>
+        
         <View style={page.bikeCard}>
           <View style={
             {justifyContent:'center',
@@ -129,7 +149,7 @@ export function Home({navigation}) {
             width:'40%',
             
              }}>
-            <Pressable style={({pressed})=>pressed? page.ButtonPressed : null}>
+            <Pressable onPress={handleUserLogin} style={({pressed})=>pressed? page.ButtonPressed : null}>
               <View style={{backgroundColor:'#FBAF57', paddingVertical:10, paddingHorizontal:20,
               borderRadius:15}}>
                 <Text style={{color:'black', fontFamily:'montserratRegular'}}>
@@ -155,7 +175,7 @@ export function Home({navigation}) {
           flex:1, flexDirection:'row'}}>
             {
               services.map((services, index)=>
-              <Pressable style={({pressed})=>pressed? {opacity:0.7}:null}>
+              <Pressable style={({pressed})=>pressed? {opacity:0.7}:null} key={index}>
               <View style={{justifyContent:'center', alignItems:'center', marginHorizontal:7}} key={index}>
                 <View><Ionicons name={services.serviceIcon} size={35} color={colors.primary}/></View>
                 <Text style={{fontFamily:'montserratSemiBold', fontSize:12}}>{services.title}</Text>
@@ -222,6 +242,7 @@ export function Home({navigation}) {
      
       
     </SafeAreaView>
+    </>
   );
 }
 
