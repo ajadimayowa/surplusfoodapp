@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, SafeAreaView, Text, StyleSheet } from "react-native";
+import { View, SafeAreaView, Text, StyleSheet } from "react-native";
 import {} from "react-native";
 
 export function Profile() {

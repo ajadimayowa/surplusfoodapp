@@ -3,38 +3,37 @@ import { View, StyleSheet, Text } from "react-native";
 import { colors } from "../constants/colors";
 
 export default function AdCard({ info, index }) {
-  // console.log(info)
   return (
-    <View style={style.container}>
+    <View style={style.container} key={index}>
       <View style={style.left}>
         <Text
           style={[
-            { color: info.item.title1Color, 
+            { color: info.title1Color, 
             fontFamily: "montserratSemiBold",
             fontSize:15
          },
           ]}
         >
-          {info.item.title1}
+          {info.title1}
         </Text>
         
         <Text
         style={[
-            { color: info.item.title2Color, 
+            { color: info.title2Color, 
             fontFamily: "montserratBold",
             fontSize:30
          },
           ]}
-        >{info.item.title2}</Text>
+        >{info.title2}</Text>
        
         <Text
         style={[
-            { color: info.item.descColor, 
+            { color: info.descColor, 
             fontFamily: "montserratLight",
             fontSize:12
          },
           ]}>
-        {info.item.desc}
+        {info.desc}
         </Text>
       </View>
       <View style={style.right}>

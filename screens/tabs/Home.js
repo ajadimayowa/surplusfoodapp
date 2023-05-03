@@ -91,7 +91,7 @@ export function Home({navigation}) {
         showsHorizontalScrollIndicator={false}
         horizontal
         data={Adverts}
-        renderItem={(ads) => <AdCard info={ads} />}
+        renderItem={({item, index}) => <AdCard info={item} index={index} />}
         keyExtractor={(item) => item.id}
         style={page.AdFlatList}
         contentContainerStyle={page.advertCont}
