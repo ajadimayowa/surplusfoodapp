@@ -9,7 +9,6 @@ import oil from '../../assets/images/oil.png';
 import provision from '../../assets/images/provision.png';
 import rice from '../../assets/images/rice.png';
 import { useLayoutEffect } from "react";
-import SelectDropdown from "react-native-select-dropdown";
 import Modal from "react-native-modal"
 import LoginModal from "../../assets/components/modals/loginModal";
 import SignInModal from "../../assets/components/modals/signInModal";
@@ -64,34 +63,12 @@ const handleEmailLogin = ()=>{
       headerTitle: '',
       headerLeft: ()=><View style={{flexDirection:'row', gap:10}}>
         <View style={{paddingHorizontal:10, elevation:2,
-      backgroundColor:'#fff', borderRadius:3,flexDirection:'row', height:40,width:'35%',alignItems:'center', justifyContent:'center'}}>
-        <Ionicons name="location-outline" size={18} color={colors.primary}/>
-        <SelectDropdown
-        rowTextStyle={{fontFamily:'montserratRegular', fontSize:14}}
-        dropdownStyle={{width:'50%'}}
-        selectedRowStyle={{backgroundColor:colors.primary}}
-        selectedRowTextStyle={{fontFamily:'montserratRegular', fontSize:14}}
-        buttonTextStyle={{fontFamily:'montserratRegular', fontSize:14}}
-        buttonStyle={{width:'80%', height:'65%', backgroundColor:'#fff'}}
-	data={locations}
-	onSelect={(selectedItem, index) => {
-		console.log(selectedItem, index)
-	}}
-	buttonTextAfterSelection={(selectedItem, index) => {
-		// text represented after item is selected
-		// if data array is an array of objects then return selectedItem.property to render after item is selected
-		return selectedItem
-	}}
-	rowTextForSelection={(item, index) => {
-		// text represented for each item in dropdown
-		// if data array is an array of objects then return item.property to represent item in dropdown
-		return item
-	}}
-/>
-          
+      backgroundColor:'#fff', borderRadius:3,flexDirection:'row', height:40,width:'35%',alignItems:'center', justifyContent:'center'}}>        <Ionicons name="location-outline" size={18} color={colors.primary}/>
+
+  
       </View> 
       <View style={{paddingHorizontal:10, elevation:2, flexDirection:'row',alignItems:'center',
-      backgroundColor:'#fff', borderRadius:3, height:40,width:'60%'}}>
+      backgroundColor:'#fff', borderRadius:3, height:40,width:'6 0%'}}>
         <TextInput placeholder="Search grocery..." style={{width:'90%',color:'#5B5B5B'}}/>
         <Pressable style={({pressed})=>pressed?{opacity:0.6}:null}>
         <Ionicons name="search-outline" size={18} color={colors.primary}/>
