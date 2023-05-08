@@ -1,10 +1,12 @@
-import React, { useLayoutEffect } from "react";
-import {Image, View, FlatList, SafeAreaView, Text, StyleSheet, TextInput,Pressable } from "react-native";
+import React, { useLayoutEffect, useState } from "react";
+import {Image, View, FlatList, SafeAreaView, Text, StyleSheet, TextInput,Pressable, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from "../assets/constants/colors";
+import { createUser } from "../assets/controllers/requests";
 
 
 export function SignUpScreen ({navigation}) {
+  const [userInfo, setUserInfo] = useState({email : '', password :'',firstName :'',lastName:'',phone:''});
 
     useLayoutEffect(()=>{
         navigation.setOptions({
@@ -13,9 +15,15 @@ export function SignUpScreen ({navigation}) {
             </Pressable>
         })
     },[navigation])
+
+    const handleCreateUser =()=>{
+      const userBio = userInfo
+      createUser(userBio );
+    }
     
   return (
-    <SafeAreaView style={page.container}>
+    <SafeAreaView >
+      <ScrollView keyboardDismissMode style={page.container}>
         <View style={{backgroundColor:'#fff', width:'100%', alignItems:'center', paddingHorizontal:'5%'}}>
         <Image style={{height:250, width:350}} alt={'delivery'} source={require('../assets/images/signUpWoman.png')}/>
         </View>
@@ -36,6 +44,9 @@ export function SignUpScreen ({navigation}) {
           >
             <TextInput
               placeholder="Email*"
+              onChangeText={(e)=>setUserInfo({...userInfo, email: e})}
+              
+
               style={{ width: "90%", color: "#5B5B5B", fontFamily:'montserratRegular'}}
             />
             <Pressable
@@ -65,6 +76,7 @@ export function SignUpScreen ({navigation}) {
           >
             <TextInput
               placeholder="Password*"
+              onChangeText={(e)=>setUserInfo({...userInfo, password: e})}
               style={{ width: "90%", color: "#5B5B5B", fontFamily:'montserratRegular'}}
             />
             <Pressable
@@ -94,6 +106,7 @@ export function SignUpScreen ({navigation}) {
           >
             <TextInput
               placeholder="First name"
+              onChangeText={(e)=>setUserInfo({...userInfo, firstName: e})}
               style={{ width: "90%", color: "#5B5B5B", fontFamily:'montserratRegular'}}
             />
             <Pressable
@@ -123,6 +136,7 @@ export function SignUpScreen ({navigation}) {
           >
             <TextInput
               placeholder="Last name"
+              onChangeText={(e)=>setUserInfo({...userInfo, lastName: e})}
               style={{ width: "90%", color: "#5B5B5B", fontFamily:'montserratRegular'}}
             />
             <Pressable
@@ -152,6 +166,7 @@ export function SignUpScreen ({navigation}) {
           >
             <TextInput
               placeholder="Phone"
+              onChangeText={(e)=>setUserInfo({...userInfo, phone: e})}
               style={{ width: "90%", color: "#5B5B5B", fontFamily:'montserratRegular'}}
             />
             <Pressable
@@ -167,8 +182,8 @@ export function SignUpScreen ({navigation}) {
 
           
       </View>
-      <View style={{width:'100%', marginTop:15}}>
-      <Pressable style={{ width: "100%" }}>
+      <View style={{width:'100%', marginTop:15, padding:0}}>
+      <Pressable onPress={handleCreateUser} android_ripple style={({pressed})=> pressed? {opacity:0.6} : null}>
             <View
               style={{
                 marginBottom:15,
@@ -183,18 +198,18 @@ export function SignUpScreen ({navigation}) {
               }}
             >
               <Text style={{ color: "#fff", fontFamily: "montserratSemiBold" }}>
-                Login
+                Register
               </Text>
             </View>
           </Pressable>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const page = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 24,
     backgroundColor: "#fff",
   },

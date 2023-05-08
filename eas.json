@@ -17,10 +17,10 @@
       }
     },
     "production": {
-      "ios": {
-        "resourceClass": "m-medium"
+      "android": {
+         "buildType": "apk"
       }
-    }
+  }
   },
   "submit": {
     "production": {}
