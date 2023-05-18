@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kingfloat.surplusfoodapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,7 +30,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "45c50dbe-23c3-4ae6-b8ff-b0152f5bc67e"
+        "projectId": "b7ff4e22-362e-489c-90a4-7f823f26863c"
       }
     }
   }
