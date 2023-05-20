@@ -9,11 +9,11 @@ import oil from '../../assets/images/oil.png';
 import provision from '../../assets/images/provision.png';
 import rice from '../../assets/images/rice.png';
 import { useLayoutEffect } from "react";
-// import SelectDropdown from "react-native-select-dropdown";
+import SelectDropdown from "react-native-select-dropdown";
 import Modal from "react-native-modal"
 import LoginModal from "../../assets/components/modals/loginModal";
 import SignInModal from "../../assets/components/modals/signInModal";
-import { useSelector } from "react-redux";
+
 import {View,FlatList,SafeAreaView,Text,StyleSheet,ActivityIndicator,ScrollView,Image,
   Button,
   Pressable,
@@ -45,10 +45,9 @@ import { colors } from "../../assets/constants/colors";
 export function Home({navigation}) {
 const [loginModal,setLoginModal] = useState(false);
 const [signInModal,setSignInModal] = useState(false);
-const getAuth = useSelector((state)=>state.auth.userInfo)
 
 const handleUserLogin = ()=>{
-  getAuth?.token == '' ? setLoginModal(true) : console.log('already logged in',getAuth?.token ); 
+  setLoginModal(true);
 }
 
 const userSignin =()=>{
@@ -67,7 +66,28 @@ const handleEmailLogin = ()=>{
         <View style={{paddingHorizontal:10, elevation:2,
       backgroundColor:'#fff', borderRadius:3,flexDirection:'row', height:40,width:'35%',alignItems:'center', justifyContent:'center'}}>
         <Ionicons name="location-outline" size={18} color={colors.primary}/>
-        
+        <SelectDropdown
+        rowTextStyle={{fontFamily:'montserratRegular', fontSize:14}}
+        dropdownStyle={{width:'50%'}}
+        selectedRowStyle={{backgroundColor:colors.primary}}
+        selectedRowTextStyle={{fontFamily:'montserratRegular', fontSize:14}}
+        buttonTextStyle={{fontFamily:'montserratRegular', fontSize:14}}
+        buttonStyle={{width:'80%', height:'65%', backgroundColor:'#fff'}}
+	data={locations}
+	onSelect={(selectedItem, index) => {
+		console.log(selectedItem, index)
+	}}
+	buttonTextAfterSelection={(selectedItem, index) => {
+		// text represented after item is selected
+		// if data array is an array of objects then return selectedItem.property to render after item is selected
+		return selectedItem
+	}}
+	rowTextForSelection={(item, index) => {
+		// text represented for each item in dropdown
+		// if data array is an array of objects then return item.property to represent item in dropdown
+		return item
+	}}
+/>
           
       </View> 
       <View style={{paddingHorizontal:10, elevation:2, flexDirection:'row',alignItems:'center',
@@ -83,7 +103,7 @@ const handleEmailLogin = ()=>{
   },[navigation])
   return (
     <>
-    <LoginModal on={loginModal} off={()=>setLoginModal(false)} emailLogin={handleEmailLogin}/>
+    <LoginModal on={loginModal} off={()=>setLoginModal(false)} emailSin={handleEmailLogin}/>
     <SignInModal on={signInModal} off={()=>setSignInModal(false)}/>
     <SafeAreaView style={page.container}>
       <FlatList
@@ -198,7 +218,7 @@ const handleEmailLogin = ()=>{
             </View>
           </View>
           <View style={{justifyContent:'center',paddingVertical:30,
-          flex:1, flexDirection:'row',gap:25, flexWrap:'wrap', width:'100%', minWidth:'100%'}}>
+          flex:1, flexDirection:'row',gap:25, flexWrap:'wrap'}}>
             {
               productCategories.map((category, index)=>
               <Pressable style={({pressed})=>pressed? {opacity:0.7}:null} key={index}>

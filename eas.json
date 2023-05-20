@@ -1,10 +1,15 @@
 {
   "cli": {
+<<<<<<< HEAD
     "version": ">= 3.13.0"
+=======
+    "version": ">= 3.10.0"
+>>>>>>> ab74bada8ac46721647197a3cf2cea3bf070b70d
   },
   "build": {
     "development": {
       "developmentClient": true,
+<<<<<<< HEAD
       "distribution": "internal"
     },
     "preview": {
@@ -15,6 +20,24 @@
          "buildType": "apk"
       }
   }
+=======
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium"
+      }
+    },
+    "production": {
+      "ios": {
+        "resourceClass": "m-medium"
+      }
+    }
+>>>>>>> ab74bada8ac46721647197a3cf2cea3bf070b70d
   },
   "submit": {
     "production": {}

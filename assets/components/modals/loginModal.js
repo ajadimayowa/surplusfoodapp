@@ -16,7 +16,7 @@ import Modal from "react-native-modal";
 import { colors } from "../../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginModal = ({ on, off,emailLogin }) => {
+const LoginModal = ({ on, off,emailSin }) => {
     const navigation =useNavigation()
   return (
     <Modal
@@ -100,7 +100,7 @@ const LoginModal = ({ on, off,emailLogin }) => {
             paddingVertical: "5%",
           }}
         >
-          <Pressable onPress={()=>emailLogin()} style={{ width: "100%" }}>
+          <Pressable onPress={()=>emailSin()} style={{ width: "100%" }}>
             <View
               style={{
                 elevation: 2,

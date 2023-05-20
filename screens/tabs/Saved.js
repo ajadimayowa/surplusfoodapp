@@ -1,11 +1,8 @@
 import React from "react";
 import { View, FlatList, SafeAreaView, Text, StyleSheet } from "react-native";
 import {} from "react-native";
-import { useSelector } from "react-redux";
 
 export function Saved() {
-  const loggedInUser = useSelector((currentUser)=>currentUser.auth.userInfo)
-  console.log(loggedInUser);
   return (
     <SafeAreaView style={page.container}>
       <View>

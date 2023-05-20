@@ -1,7 +1,12 @@
 {
   "expo": {
+<<<<<<< HEAD
     "name": "surplusfood9ja",
     "slug": "surplusfood9ja",
+=======
+    "name": "surplusfood-app",
+    "slug": "surplusfood-app",
+>>>>>>> ab74bada8ac46721647197a3cf2cea3bf070b70d
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
@@ -22,6 +27,7 @@
         "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#ffffff"
       },
+<<<<<<< HEAD
       "package": "com.kingfloat.surplusfood9ja"
     },
     "web": {
@@ -30,6 +36,16 @@
     "extra": {
       "eas": {
         "projectId": "514fc13f-873b-4c02-b72b-5d1db2596d78"
+=======
+      "package": "com.kingfloat.surplusfoodapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "45c50dbe-23c3-4ae6-b8ff-b0152f5bc67e"
+>>>>>>> ab74bada8ac46721647197a3cf2cea3bf070b70d
       }
     }
   }

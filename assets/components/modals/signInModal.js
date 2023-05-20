@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {
   View,
   FlatList,
@@ -16,23 +16,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Modal from "react-native-modal";
 import { colors } from "../../constants/colors";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { handleLogin } from "../../controllers/requests";
-import { loginUser } from "../../store/slices/authSlice";
 
 const SignInModal = ({ on, off }) => {
-  const dispatch = useDispatch();
-  const [userInfo, setUserInfo] = useState({id:'657362',email: '', password : '', token:'xyzabc/2'});
-  const [secureText, setSecureText] = useState(true);
-
-
-  const handleUserLogin = ()=>{
-    handleLogin(userInfo);
-    dispatch(loginUser(userInfo))
-  }
-  
-  return (  
+  return (
     <Modal
       onBackdropPress={() => off()}
       animationIn="slideInUp"
@@ -153,15 +139,16 @@ const SignInModal = ({ on, off }) => {
             <TextInput
               placeholder="Email"
               style={{ width: "90%", color: "#5B5B5B",fontFamily:'montserratRegular' }}
-              onChangeText={(input)=>setUserInfo({...userInfo, email:input})}
             />
-            
+            <Pressable
+              style={({ pressed }) => (pressed ? { opacity: 0.6 } : null)}
+            >
               <Ionicons
                 name="mail"
                 size={14}
                 color='gray'
               />
-           
+            </Pressable>
           </View>
 
           <View
@@ -181,11 +168,8 @@ const SignInModal = ({ on, off }) => {
             <TextInput
               placeholder="Password"
               style={{ width: "90%", color: "#5B5B5B", fontFamily:'montserratRegular'}}
-              secureTextEntry={secureText}
-              onChangeText={(input)=>setUserInfo({...userInfo,password:input})}
             />
             <Pressable
-            onPress={()=>setSecureText(!secureText)}
               style={({ pressed }) => (pressed ? { opacity: 0.6 } : null)}
             >
               <Ionicons
@@ -212,7 +196,7 @@ const SignInModal = ({ on, off }) => {
         </View>
 
 
-          <Pressable onPress={handleUserLogin} style={{ width: "100%" }}>
+          <Pressable style={{ width: "100%" }}>
             <View
               style={{
                 marginBottom:15,

@@ -6,11 +6,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TabNavs } from './screens/tabs/tabNavigations';
 import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 import { SignUpScreen } from './screens/SignUp';
-import { Provider } from 'react-redux';
-import { store } from './assets/store/store';
-
-
 
 
 
@@ -32,7 +29,6 @@ export default function App() {
   }
   
   return (
-    <Provider store={store}>
     <NavigationContainer>
       <stack.Navigator>
         <stack.Screen options={{
@@ -43,7 +39,6 @@ export default function App() {
         }} name='signup' component={SignUpScreen}/>
       </stack.Navigator>
     </NavigationContainer>
-    </Provider>
   );
 }
 
