@@ -6,7 +6,7 @@ export function Saved() {
   return (
     <SafeAreaView style={page.container}>
       <View>
-        <Text style={page.text}>your favorites are empty</Text>
+        <Text style={page.text}>your favorites are empty for now</Text>
       </View>
     </SafeAreaView>
   );
