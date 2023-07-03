@@ -11,14 +11,14 @@ import {
   Button,
   Pressable,
   TextInput,
+  Alert,
 } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../assets/constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { handleLogin } from "../assets/controllers/requests";
-import { loginUser } from "../assets/store/slices/authSlice";
+import { logUserIn } from "../assets/controllers/requests";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -26,15 +26,14 @@ const LoginScreen = () => {
   const [secureText, setSecureText] = useState(false);
   const [loading, setLoading] = useState(false);
   const [invalidMail, setInValidMail] = useState(false);
+  const [authFail, setAuthFail] = useState(false);
   const [emptyPass, setEmptyPass] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    id: "657362",
     email: "",
     password: "",
-    token: "xyzabc/2",
   });
 
-  const handleUserLogin = () => {
+  const handleUserLogin = async () => {
     // console.log(userInfo.email);
     if (!userInfo.email.includes("@")) {
       setInValidMail(true);
@@ -48,12 +47,16 @@ const LoginScreen = () => {
       setEmptyPass(true);
       return;
     } else {
-     
-     const res = handleLogin(userInfo);
-     if (res == 'ok'){
-      navigation.navigate('dashboard')
-     }
-      dispatch(loginUser(userInfo));
+      setLoading(true);
+      try {
+        const res = await logUserIn(userInfo);
+        if (res?.status == 200) {
+          navigation.replace("dashboard");
+        }
+      } catch (error) {
+        setAuthFail(true);
+        setLoading(false);
+      }
     }
   };
 
@@ -111,7 +114,10 @@ const LoginScreen = () => {
           >
             <TextInput
               placeholder="Email"
-              onChange={()=>setInValidMail(false)}
+              onChange={() => {
+                setInValidMail(false);
+                setAuthFail(false);
+              }}
               style={{
                 width: "90%",
                 color: "#5B5B5B",
@@ -124,13 +130,13 @@ const LoginScreen = () => {
 
             <Ionicons name="mail" size={14} color="gray" />
           </View>
-          {
-            invalidMail ? <View
-              style={{ width: "100%", paddingHorizontal: "3%" }}
-            >
-              <Text style={{color: "red"}}>{"Error : invalid mail address"}</Text>
-            </View> : null
-          }
+          {invalidMail ? (
+            <View style={{ width: "100%", paddingHorizontal: "3%" }}>
+              <Text style={{ color: "red" }}>
+                {"Error : invalid mail address"}
+              </Text>
+            </View>
+          ) : null}
 
           <View
             style={{
@@ -147,7 +153,10 @@ const LoginScreen = () => {
           >
             <TextInput
               placeholder="Password"
-              onChange={()=>setEmptyPass(false)}
+              onChange={() => {
+                setEmptyPass(false);
+                setAuthFail(false);
+              }}
               style={{
                 width: "90%",
                 color: "#5B5B5B",
@@ -162,17 +171,29 @@ const LoginScreen = () => {
               onPress={() => setSecureText(!secureText)}
               style={({ pressed }) => (pressed ? { opacity: 0.6 } : null)}
             >
-              <Ionicons name={secureText? 'eye-off':"eye"} size={14} color="gray" />
+              <Ionicons
+                name={secureText ? "eye-off" : "eye"}
+                size={14}
+                color="gray"
+              />
             </Pressable>
           </View>
 
-          {
-            emptyPass ? <View
-              style={{ width: "100%", paddingHorizontal: "3%" }}
-            >
-              <Text style={{color: "red"}}>{"Error : password is empty"}</Text>
-            </View> : null
-          }
+          {emptyPass ? (
+            <View style={{ width: "100%", paddingHorizontal: "3%" }}>
+              <Text style={{ color: "red" }}>
+                {"Error : password is empty"}
+              </Text>
+            </View>
+          ) : null}
+
+          {authFail ? (
+            <View style={{ width: "100%", paddingHorizontal: "3%" }}>
+              <Text style={{ color: "red" }}>
+                {"Error : Email or Password incorrect!"}
+              </Text>
+            </View>
+          ) : null}
 
           <View
             style={{
@@ -227,7 +248,7 @@ const LoginScreen = () => {
           </Text>
           <Pressable
             onPress={() => {
-              navigation.navigate("signup");
+              navigation.replace("signup");
             }}
           >
             <Text

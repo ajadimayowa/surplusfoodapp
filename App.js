@@ -43,7 +43,7 @@ export default function App() {
           headerShown:false
         }} name='dashboard' component={TabNavs}/>
         <stack.Screen options={{
-          title:'Register'
+          headerShown:false
         }} name='signup' component={SignUpScreen}/>
       </stack.Navigator>
     </NavigationContainer>

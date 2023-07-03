@@ -9,12 +9,17 @@ import {
   TextInput,
   Pressable,
   ScrollView,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../assets/constants/colors";
 import { createUser } from "../assets/controllers/requests";
+import SuccessModal from "../assets/components/modals/successModal";
 
 export function SignUpScreen({ navigation }) {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -43,37 +48,68 @@ export function SignUpScreen({ navigation }) {
     });
   }, [navigation]);
 
-  const handleCreateUser = () => {
+  const handleCreateUser = async () => {
     if (userInfo.email == "") {
       setBorderErrorEmail(true);
-    } if (userInfo.password == "") {
+   
+    }
+    if (!userInfo.email.includes("@")) {
+      setBorderErrorEmail(true);
+    }
+    if (userInfo.password == "") {
       setBorderErrorPassword(true);
-    } if (userInfo.cPassword == "") {
+    }
+    if (userInfo.cPassword == "") {
       setBorderErrorCPassword(true);
-    } if(userInfo.cPassword !== userInfo.password){
+    }
+    if (userInfo.cPassword !== userInfo.password) {
       setPasswordNotEqual(true);
       setBorderErrorCPassword(true);
-    }if (userInfo.firstName == "") {
-      setBorderErrorFirstName(true);
-    }if (userInfo.lastName == "") {
-      setBorderErrorLastName(true);
-    } if (userInfo.phone == "") {
-      setBorderErrorPhone(true);
-    } if (userInfo.phone.length < 11) {
-      setBorderErrorPhone(true);
-    } else if(userInfo.firstName !='' && userInfo.lastName !=''
-      && userInfo.email !='' && userInfo.phone !='' && userInfo.password !='' 
-      && userInfo.cPassword == userInfo.password && userInfo.cPassword != '') {
-     const userBio = userInfo
-    createUser(userBio );
     }
-
+    if (userInfo.firstName == "") {
+      setBorderErrorFirstName(true);
+    }
+    if (userInfo.lastName == "") {
+      setBorderErrorLastName(true);
+    }
+    if (userInfo.phone == "") {
+      setBorderErrorPhone(true);
+    }
+    if (userInfo.phone.length < 11) {
+      setBorderErrorPhone(true);
+    } else if (
+      userInfo.firstName != "" &&
+      userInfo.lastName != "" &&
+      userInfo.email != "" &&
+      userInfo.email.includes("@") &&
+      userInfo.phone != "" &&
+      userInfo.password != "" &&
+      userInfo.cPassword == userInfo.password &&
+      userInfo.cPassword != ""
+    ) {
+      setLoading(true);
+      try {
+        const res = await createUser(userInfo);
+        console.log(res);
+        if(res?.status == 200){
+          setLoading(false);
+          setSuccess(true);
+        } 
+      } catch (error) {
+        setLoading(false);
+        Alert.alert('Registration Failed, Try Again');
+      }
+    }
   };
-
 
   return (
     <SafeAreaView style={page.container}>
-      <ScrollView keyboardDismissMode style={page.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingVertical: 30 }}
+        keyboardDismissMode
+        style={page.container}
+      >
         <View
           style={{
             backgroundColor: "#fff",
@@ -113,9 +149,9 @@ export function SignUpScreen({ navigation }) {
           >
             <TextInput
               placeholder="First name"
-              onFocus={()=>setBorderErrorFirstName(false)}
+              onFocus={() => setBorderErrorFirstName(false)}
               onChangeText={(e) => {
-                setUserInfo({ ...userInfo, firstName: e })
+                setUserInfo({ ...userInfo, firstName: e });
               }}
               style={{
                 width: "90%",
@@ -147,9 +183,9 @@ export function SignUpScreen({ navigation }) {
           >
             <TextInput
               placeholder="Last name"
-              onFocus={()=>setBorderErrorLastName(false)}
-              onChangeText={(e) =>{ 
-                setUserInfo({ ...userInfo, lastName: e })
+              onFocus={() => setBorderErrorLastName(false)}
+              onChangeText={(e) => {
+                setUserInfo({ ...userInfo, lastName: e });
               }}
               style={{
                 width: "90%",
@@ -180,9 +216,10 @@ export function SignUpScreen({ navigation }) {
             }}
           >
             <TextInput
+              autoCapitalize="none"
               placeholder="Email*"
-              inputMode='email'
-               onFocus={()=>setBorderErrorEmail(false)}
+              inputMode="email"
+              onFocus={() => setBorderErrorEmail(false)}
               onChangeText={(e) => {
                 setUserInfo({ ...userInfo, email: e });
               }}
@@ -216,11 +253,11 @@ export function SignUpScreen({ navigation }) {
           >
             <TextInput
               placeholder="Phone"
-              inputMode='tel'
-              onFocus={()=>setBorderErrorPhone(false)}
+              inputMode="tel"
+              onFocus={() => setBorderErrorPhone(false)}
               maxLength={11}
               onChangeText={(e) => {
-                setUserInfo({ ...userInfo, phone: e })
+                setUserInfo({ ...userInfo, phone: e });
               }}
               style={{
                 width: "90%",
@@ -251,9 +288,10 @@ export function SignUpScreen({ navigation }) {
             }}
           >
             <TextInput
-            secureTextEntry={secure}
+              autoCapitalize="none"
+              secureTextEntry={secure}
               placeholder="Password*"
-              onFocus={()=>setBorderErrorPassword(false)}
+              onFocus={() => setBorderErrorPassword(false)}
               onChangeText={(e) => {
                 setUserInfo({ ...userInfo, password: e });
               }}
@@ -264,10 +302,14 @@ export function SignUpScreen({ navigation }) {
               }}
             />
             <Pressable
-            onPress={()=>setSecure(!secure)}
+              onPress={() => setSecure(!secure)}
               style={({ pressed }) => (pressed ? { opacity: 0.6 } : null)}
             >
-              <Ionicons name={secure ? 'eye' : 'eye-off'} size={14} color="gray" />
+              <Ionicons
+                name={secure ? "eye" : "eye-off"}
+                size={14}
+                color="gray"
+              />
             </Pressable>
           </View>
 
@@ -287,9 +329,12 @@ export function SignUpScreen({ navigation }) {
             }}
           >
             <TextInput
-              placeholder={passwordNotEqual?'Password is not equal':"Confirm Password*"}
-              onFocus={()=>{
-                setBorderErrorCPassword(false)
+              autoCapitalize="none"
+              placeholder={
+                passwordNotEqual ? "Password is not equal" : "Confirm Password*"
+              }
+              onFocus={() => {
+                setBorderErrorCPassword(false);
                 setPasswordNotEqual(false);
               }}
               secureTextEntry={secureC}
@@ -303,10 +348,14 @@ export function SignUpScreen({ navigation }) {
               }}
             />
             <Pressable
-            onPress={()=>setSecureC(!secureC)}
+              onPress={() => setSecureC(!secureC)}
               style={({ pressed }) => (pressed ? { opacity: 0.6 } : null)}
             >
-              <Ionicons name={secureC ? 'eye':'eye-off'} size={14} color="gray" />
+              <Ionicons
+                name={secureC ? "eye" : "eye-off"}
+                size={14}
+                color="gray"
+              />
             </Pressable>
           </View>
         </View>
@@ -330,12 +379,36 @@ export function SignUpScreen({ navigation }) {
               }}
             >
               <Text style={{ color: "#fff", fontFamily: "montserratSemiBold" }}>
-                Register
+               {loading? <ActivityIndicator/> : 'Register'}
               </Text>
             </View>
           </Pressable>
         </View>
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "row",
+            paddingVertical: 5,
+            justifyContent: "center",
+            gap: 5,
+          }}
+        >
+          <Text style={{ fontFamily: "montserratRegular" }}>
+            Registered user?
+          </Text>
+          <Pressable onPress={() => navigation.replace("login")}>
+            <Text
+              style={{
+                fontFamily: "montserratSemiBold",
+                color: colors.primary,
+              }}
+            >
+              Login
+            </Text>
+          </Pressable>
+        </View>
       </ScrollView>
+     <SuccessModal on={success} off={()=>navigation.replace('login')}/>
     </SafeAreaView>
   );
 }

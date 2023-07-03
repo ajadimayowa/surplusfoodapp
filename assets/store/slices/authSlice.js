@@ -15,7 +15,9 @@ const authSlice = createSlice({
       console.log(userInfo)
     },
     setUser: (userInfo) => {},
-    logUserOut: (userInfo) => {},
+    logUserOut: (userInfo) => {
+
+    },
   },
 });
 
