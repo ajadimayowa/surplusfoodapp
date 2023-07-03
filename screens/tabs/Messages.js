@@ -16,12 +16,12 @@ const page = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: "#000",
+    backgroundColor: "#fff",
   },
   section1: {
     flex: 1,
     padding: 24,
-    backgroundColor: "#C11313",
+    backgroundColor: "#fff",
   },
   text: {
     fontSize: 30,

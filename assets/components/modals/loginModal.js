@@ -37,7 +37,7 @@ const LoginModal = ({ on, off,emailLogin }) => {
         }}
       >
         <View style={{ width: "100%", paddingHorizontal: "5%" }}>
-          <Text style={{ fontFamily: "montserratSemiBold" }}>Login Page :</Text>
+          <Text style={{ fontFamily: "montserratSemiBold" }}>Login :</Text>
         </View>
 
         <View

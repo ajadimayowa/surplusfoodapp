@@ -36,7 +36,7 @@ export function SignUpScreen({ navigation }) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <Pressable onPress={() => navigation.navigate("HomePage")}>
+        <Pressable onPress={() => navigation.navigate("login")}>
           <Ionicons name="chevron-back-sharp" size={25} />
         </Pressable>
       ),
@@ -58,6 +58,8 @@ export function SignUpScreen({ navigation }) {
     }if (userInfo.lastName == "") {
       setBorderErrorLastName(true);
     } if (userInfo.phone == "") {
+      setBorderErrorPhone(true);
+    } if (userInfo.phone.length < 11) {
       setBorderErrorPhone(true);
     } else if(userInfo.firstName !='' && userInfo.lastName !=''
       && userInfo.email !='' && userInfo.phone !='' && userInfo.password !='' 

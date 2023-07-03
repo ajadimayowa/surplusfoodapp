@@ -14,5 +14,7 @@ export const createUser =(userInfo)=>{
 }
 
 export const handleLogin = (userInput)=>{
+    const success = 'ok'
+    return success
     
 }

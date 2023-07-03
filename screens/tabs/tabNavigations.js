@@ -9,16 +9,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors } from "../../assets/constants/colors";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Pressable } from "react-native";
 
 export function TabNavs(){
     const tab = createBottomTabNavigator();
+    const goToProfile = (e)=>{
+      e.preventDefault();
+      console.log('ok now');
+
+
+    }
     return(
 <tab.Navigator screenOptions={{
         tabBarShowLabel : false,
         
       }}>
         <tab.Screen options={{
-          tabBarIcon : ({focused,color, size})=> <Ionicons name="ios-home-outline" size={size} color={focused? '#0E6C4D':'grey'} />
+          tabBarIcon : ({focused,color, size})=>  <Ionicons name="ios-home-outline" size={size} color={focused? '#0E6C4D':'grey'} />
         }} name='home' component={Home}/>
         
         <tab.Screen options={{

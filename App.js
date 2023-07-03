@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TabNavs } from './screens/tabs/tabNavigations';
 import { useFonts } from 'expo-font';
 import { SignUpScreen } from './screens/SignUp';
+import LoginScreen from './screens/LoginPage';
 import { Provider } from 'react-redux';
 import { store } from './assets/store/store';
 
@@ -35,9 +36,12 @@ export default function App() {
     <Provider store={store}>
     <NavigationContainer>
       <stack.Navigator>
+      <stack.Screen options={{
+          headerShown : false
+        }} name='login' component={LoginScreen}/>
         <stack.Screen options={{
           headerShown:false
-        }} name='HomePage' component={TabNavs}/>
+        }} name='dashboard' component={TabNavs}/>
         <stack.Screen options={{
           title:'Register'
         }} name='signup' component={SignUpScreen}/>
