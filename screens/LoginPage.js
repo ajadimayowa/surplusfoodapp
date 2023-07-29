@@ -23,7 +23,7 @@ import { logUserIn } from "../assets/controllers/requests";
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [secureText, setSecureText] = useState(false);
+  const [secureText, setSecureText] = useState(true);
   const [loading, setLoading] = useState(false);
   const [invalidMail, setInValidMail] = useState(false);
   const [authFail, setAuthFail] = useState(false);
