@@ -215,9 +215,6 @@ const handleEmailLogin = ()=>{
           </View>
   
         </View>
-        <View style={page.menuCard}>
-          
-        </View>
       </ScrollView>
      
       
@@ -228,8 +225,10 @@ const handleEmailLogin = ()=>{
 
 const page = StyleSheet.create({
   container: {
-    backgroundColor: "#F8F7F7",
+    backgroundColor: "red",
     width: "100%",
+    paddingVertical:'5%',
+    flex:1
   },
   scroll: {
     marginTop:10,
@@ -260,12 +259,12 @@ const page = StyleSheet.create({
     display: "flex",
     padding: 10,
     width: "100%",
-    minHeight: '20%',
+    minWidth : '100%',
     paddingVertical:20,
     paddingHorizontal:20,
     marginTop: 20,
     borderRadius: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "pink",
   },
   menuCard: {
     display: "flex",

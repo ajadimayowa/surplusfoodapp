@@ -15,10 +15,13 @@ const authSlice = createSlice({
       console.log(userInfo)
     },
     setUser: (userInfo) => {},
-    logUserOut: (userInfo) => {},
+    logUserOut: (userInfo) => {
+
+    },
   },
 });
 
 export default auth = authSlice.reducer;
 export const loginUser = authSlice.actions.logUserIn;
 export const setLoggedInUser = authSlice.actions.setUser;
+export const logUserOut = authSlice.actions.logUserOut;
