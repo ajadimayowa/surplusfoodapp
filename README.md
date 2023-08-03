@@ -1,4 +1,4 @@
-#####  To run this application on a virtual device for the first time, run the below command.
+####  To run this application on a virtual device for the first time, run the below command.
 
 ##### **NOTE:**  *This command is required if you're using that device for the first time to run the application.*
 
