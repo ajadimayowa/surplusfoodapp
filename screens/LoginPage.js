@@ -19,6 +19,12 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { logUserIn } from "../assets/controllers/requests";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import { moderateVerticalScale, ScaledSheet } from 'react-native-size-matters';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -56,6 +62,32 @@ const LoginScreen = () => {
       } catch (error) {
         setAuthFail(true);
         setLoading(false);
+      }
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userData = await GoogleSignin.signIn();
+      userData.type = 'google'
+      // setgoogleUserData(userData);
+      const { user, idToken } = userData
+      setUserInfo({ ...user, lastName: user?.familyName, firstName: user?.givenName, email: user?.email, id: user?.id, image: user.photo, accessToken: idToken, type: 'google' })
+      navigation.replace("dashboard");
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        Alert.alert('user cancelled the login flow')
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+        Alert.alert('operation (e.g. sign in) is in progress already')
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        Alert.alert('play services not available or outdated')
+        // play services not available or outdated
+      } else {
+        Alert.alert(`${error.message}` || 'Something went wrong')
+        // some other error happened
       }
     }
   };
@@ -123,6 +155,7 @@ const LoginScreen = () => {
                 color: "#5B5B5B",
                 fontFamily: "montserratRegular",
               }}
+              value={userInfo?.email}
               onChangeText={(input) =>
                 setUserInfo({ ...userInfo, email: input })
               }
@@ -230,6 +263,31 @@ const LoginScreen = () => {
             >
               <Text style={{ color: "#fff", fontFamily: "montserratSemiBold" }}>
                 {loading ? <ActivityIndicator /> : "Login"}
+              </Text>
+            </View>
+          </Pressable>
+          <Pressable onPress={signInWithGoogle} style={{ width: "100%" }}>
+          <View
+              style={{
+                marginBottom: 15,
+                elevation: 2,
+                backgroundColor: colors.white,
+                flexDirection: 'row',
+                justifyContent: "center",
+                alignItems: "center",
+                height: moderateVerticalScale(45),
+                paddingHorizontal: 40,
+                paddingVertical: 10,
+                borderRadius: 5,
+              }}
+            >
+              <Image
+                style={{ height: moderateVerticalScale(18), width: moderateVerticalScale(18), marginRight: moderateVerticalScale(15) }}
+                alt={"delivery"}
+                source={require("../assets/images/search.png")}
+              />
+              <Text style={{ color: colors.primary, fontSize: moderateVerticalScale(15), fontFamily: "montserratSemiBold" }}>
+                {loading ? <ActivityIndicator /> : 'Sign In With Google'}
               </Text>
             </View>
           </Pressable>

@@ -16,6 +16,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../assets/constants/colors";
 import { createUser } from "../assets/controllers/requests";
 import SuccessModal from "../assets/components/modals/successModal";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import { moderateVerticalScale } from 'react-native-size-matters';
+
 
 export function SignUpScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
@@ -27,7 +35,9 @@ export function SignUpScreen({ navigation }) {
     firstName: "",
     lastName: "",
     phone: "",
+    type: '',
   });
+  const [googleUserData, setgoogleUserData] = useState({})
   const [borderErrorEmail, setBorderErrorEmail] = useState(false);
   const [borderErrorPassword, setBorderErrorPassword] = useState(false);
   const [borderErrorCPassword, setBorderErrorCPassword] = useState(false);
@@ -51,7 +61,7 @@ export function SignUpScreen({ navigation }) {
   const handleCreateUser = async () => {
     if (userInfo.email == "") {
       setBorderErrorEmail(true);
-   
+
     }
     if (!userInfo.email.includes("@")) {
       setBorderErrorEmail(true);
@@ -91,16 +101,54 @@ export function SignUpScreen({ navigation }) {
       try {
         const res = await createUser(userInfo);
         console.log(res);
-        if(res?.status == 200){
+        if (res?.status == 200) {
           setLoading(false);
           setSuccess(true);
-        } 
+        }
       } catch (error) {
         setLoading(false);
         Alert.alert('Registration Failed, Try Again');
       }
     }
   };
+
+  const signInWithGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userData = await GoogleSignin.signIn();
+      userData.type = 'google'
+      setgoogleUserData(userData);
+      const { user, idToken } = userData
+      setUserInfo({ ...user, lastName: user?.familyName, firstName: user?.givenName, email: user?.email, id: user?.id, image: user.photo, accessToken: idToken, type: 'google' })
+      await signupUser(idToken)
+    } catch (error) {
+      console.log('error', error.message)
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        Alert.alert('user cancelled the login flow')
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+        Alert.alert('operation (e.g. sign in) is in progress already')
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        Alert.alert('play services not available or outdated')
+        // play services not available or outdated
+      } else {
+        Alert.alert(`${error.message}` || 'Something went wrong')
+        // some other error happened
+      }
+    }
+  };
+
+  async function signupUser(idToken) {
+    try {
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const fireBaseAuth = await auth().signInWithCredential(googleCredential);
+      navigation.replace('login')
+      return fireBaseAuth
+    } catch (error) {
+      Alert.alert(error.message)
+    }
+  }
 
   return (
     <SafeAreaView style={page.container}>
@@ -153,6 +201,7 @@ export function SignUpScreen({ navigation }) {
               onChangeText={(e) => {
                 setUserInfo({ ...userInfo, firstName: e });
               }}
+              value={userInfo.firstName}
               style={{
                 width: "90%",
                 color: "#5B5B5B",
@@ -183,6 +232,7 @@ export function SignUpScreen({ navigation }) {
           >
             <TextInput
               placeholder="Last name"
+              value={userInfo.lastName}
               onFocus={() => setBorderErrorLastName(false)}
               onChangeText={(e) => {
                 setUserInfo({ ...userInfo, lastName: e });
@@ -379,7 +429,36 @@ export function SignUpScreen({ navigation }) {
               }}
             >
               <Text style={{ color: "#fff", fontFamily: "montserratSemiBold" }}>
-               {loading? <ActivityIndicator/> : 'Register'}
+                {loading ? <ActivityIndicator /> : 'Register'}
+              </Text>
+            </View>
+          </Pressable>
+          <Pressable
+            onPress={signInWithGoogle}
+            android_ripple
+            style={({ pressed }) => (pressed ? { opacity: 0.6 } : null)}
+          >
+            <View
+              style={{
+                marginBottom: 15,
+                elevation: 2,
+                backgroundColor: colors.white,
+                flexDirection: 'row',
+                justifyContent: "center",
+                alignItems: "center",
+                height: moderateVerticalScale(45),
+                paddingHorizontal: 40,
+                paddingVertical: 10,
+                borderRadius: 5,
+              }}
+            >
+              <Image
+                style={{ height: moderateVerticalScale(18), width: moderateVerticalScale(18), marginRight: moderateVerticalScale(15) }}
+                alt={"delivery"}
+                source={require("../assets/images/search.png")}
+              />
+              <Text style={{ color: colors.primary, fontSize: moderateVerticalScale(15),fontFamily: "montserratSemiBold" }}>
+                {loading ? <ActivityIndicator /> : 'Sign Up With Google'}
               </Text>
             </View>
           </Pressable>
@@ -408,7 +487,7 @@ export function SignUpScreen({ navigation }) {
           </Pressable>
         </View>
       </ScrollView>
-     <SuccessModal on={success} off={()=>navigation.replace('login')}/>
+      <SuccessModal on={success} off={() => navigation.replace('login')} />
     </SafeAreaView>
   );
 }
