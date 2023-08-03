@@ -20,8 +20,9 @@ npx expo install @react-native-firebase/app
    npx expo run:android
    ```
 4. Any other firebase package been used should alsoo be refrenced in the app config file.
+<br>
+5. Follow the documentation to create the service file, use the below link to achieve that  [Link on how to set up firebase for expo app](https://www.youtube.com/watch?v=wQnUb86ge7Y).
 
-####  [Link to how to create the SHA 1 key for the applicatiton](https://www.youtube.com/watch?v=wQnUb86ge7Y)
 
 
 

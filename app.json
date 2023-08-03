@@ -29,7 +29,8 @@
       "package": "com.kingfloat.surplusfood9ja"
     },
     "plugins": [
-      "@react-native-firebase/app"
+      "@react-native-firebase/app",
+      "@react-native-google-signin/google-signin"
     ],
     "web": {
       "favicon": "./assets/app-icon.png"
