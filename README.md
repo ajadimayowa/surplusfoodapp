@@ -26,7 +26,7 @@ eas build --profile development-simulator --platform ios
 6. For android physical device, go to your expo dashboard download the apk file to your android device
 
 7. Install the expo go app, make sure you're on the same network as your system
-   - Use the expo go app to scan the qr code that appears after running step 3, it will automatically run the installed apk file for you
+   - Use the expo go app to scan the qr code that appears after running step 4, it will automatically run the installed apk file for you
    - For iOS use the camera app to lauch the expo go app
 
 8. Any other firebase package been used should also be refrenced in the app config file.
