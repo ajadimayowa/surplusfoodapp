@@ -21,5 +21,7 @@ npx expo install @react-native-firebase/app
    ```
 4. Any other firebase package been used should alsoo be refrenced in the app config file.
 
+####  [Link to how to create the SHA 1 key for the applicatiton](https://www.youtube.com/watch?v=wQnUb86ge7Y)
+
 
 

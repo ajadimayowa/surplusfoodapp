@@ -15,16 +15,22 @@
       "**/*"
     ],
     "ios": {
+      "useFrameworks": "static",
       "supportsTablet": true,
-      "bundleIdentifier": "com.kingfloat.surplusfood9ja"
+      "bundleIdentifier": "com.kingfloat.surplusfood9ja",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.kingfloat.surplusfood9ja"
     },
+    "plugins": [
+      "@react-native-firebase/app"
+    ],
     "web": {
       "favicon": "./assets/app-icon.png"
     },

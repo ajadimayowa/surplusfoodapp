@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "941734571714",
+    "firebase_url": "https://surplus-auth-dev-default-rtdb.firebaseio.com",
+    "project_id": "surplus-auth-dev",
+    "storage_bucket": "surplus-auth-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941734571714:android:38ca6c30f9a2004dbbd55b",
+        "android_client_info": {
+          "package_name": "com.kingfloat.surplusfood9ja"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941734571714-pkd2skeh82tov6uq0ju8vgm64r8vl3fe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kingfloat.surplusfood9ja",
+            "certificate_hash": "680d1b804f1ef86823295dc708623b1d9e411bd8"
+          }
+        },
+        {
+          "client_id": "941734571714-qodpvfbso0186r4oiugcpumvpmc11kll.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kingfloat.surplusfood9ja",
+            "certificate_hash": "73451ed50a7533a180e920fc28e75d578917997b"
+          }
+        },
+        {
+          "client_id": "941734571714-7pl0q0038du04rgqi19jn9mfdahvko7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbKW6lBo3Kf4OCBPGSoQskGrpnWwRiYrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941734571714-7pl0q0038du04rgqi19jn9mfdahvko7f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
