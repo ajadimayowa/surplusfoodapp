@@ -14,17 +14,24 @@ npx expo install @react-native-firebase/app
 ```
 "dev": expo start --dev-client
 ```
-4. After the build is done, you will be asked do you want to install it on your device say yes.
-<br>
-5. For android physical device, go to your expo dashboard download the apk file to your android device
-<br>
-6. Install the expo go app, make sure you're on the same network as your system
+4. Run the development build for android and iOS [Follow this link for development documentation](https://docs.expo.dev/develop/development-builds/create-a-build/?utm_source=google&utm_medium=cpc&utm_content=performancemax&gclid=Cj0KCQjwoK2mBhDzARIsADGbjepm0Q72S4-BARocZT-NZbQYkUas1m3CmwFafYkkeGlKqDX3dOCTTEEaAhb9EALw_wcB)
+```
+eas build --profile development --platform android
+```
+```
+eas build --profile development-simulator --platform ios
+```
+5. After the build is done, you will be asked do you want to install it on your device say yes.
+
+6. For android physical device, go to your expo dashboard download the apk file to your android device
+
+7. Install the expo go app, make sure you're on the same network as your system
    - Use the expo go app to scan the qr code that appears after running step 3, it will automatically run the installed apk file for you
    - For iOS use the camera app to lauch the expo go app
-<br>
-6. Any other firebase package been used should also be refrenced in the app config file.
-<br>
-7. Follow the documentation to create the service file, use the below link to achieve that  [Link on how to set up firebase for expo app](https://www.youtube.com/watch?v=wQnUb86ge7Y).
+
+8. Any other firebase package been used should also be refrenced in the app config file.
+
+9. Follow the documentation to create the service file, use the below link to achieve that  [Link on how to set up firebase for expo app](https://www.youtube.com/watch?v=wQnUb86ge7Y).
 
 
 
