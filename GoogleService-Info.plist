@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>941734571714-33t8prgr3pcp9rud70ic5hnl4o6b5m88.apps.googleusercontent.com</string>
+	<string>538355012816-4ggdhva0302cenqu4k9c7po8554riqb8.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.941734571714-33t8prgr3pcp9rud70ic5hnl4o6b5m88</string>
+	<string>com.googleusercontent.apps.538355012816-4ggdhva0302cenqu4k9c7po8554riqb8</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>941734571714-pkd2skeh82tov6uq0ju8vgm64r8vl3fe.apps.googleusercontent.com</string>
+	<string>538355012816-kb1tocskq0kf8rg4an2a7g77o1m72de9.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC3ucocBUtr8zrwRjtkJ_2KTmX6_kT4tWo</string>
+	<string>AIzaSyD6pqSULA2cnLBVFoqPzduxtINZPjoIoig</string>
 	<key>GCM_SENDER_ID</key>
-	<string>941734571714</string>
+	<string>538355012816</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.kingfloat.surplusfood9ja</string>
 	<key>PROJECT_ID</key>
-	<string>surplus-auth-dev</string>
+	<string>surplus-food-394811</string>
 	<key>STORAGE_BUCKET</key>
-	<string>surplus-auth-dev.appspot.com</string>
+	<string>surplus-food-394811.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:941734571714:ios:ad857f65818c79e4bbd55b</string>
-	<key>DATABASE_URL</key>
-	<string>https://surplus-auth-dev-default-rtdb.firebaseio.com</string>
+	<string>1:538355012816:ios:6d8694f192911205ddbad5</string>
 </dict>
 </plist>

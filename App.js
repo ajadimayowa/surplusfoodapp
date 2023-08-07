@@ -39,7 +39,6 @@ export default function App() {
     return subscriber; // unsubscribe on unmount
   }, []);
   useLayoutEffect(() => {
-    console.log('googleAuth', googleAuth)
     isSignedIn()
     console.log('signedIn', signedIn)
   }, [])
@@ -73,7 +72,19 @@ export default function App() {
             headerShown: false
           }} name='signup' component={SignUpScreen} />
         </stack.Navigator>
-      </NavigationContainer> : <Text>Loading</Text>}
+      </NavigationContainer> : <NavigationContainer>
+        <stack.Navigator initialRouteName={user && user?.email ? 'dashboard' : 'login'}>
+          <stack.Screen options={{
+            headerShown: false
+          }} name='login' component={LoginScreen} />
+          <stack.Screen options={{
+            headerShown: false
+          }} name='dashboard' component={TabNavs} />
+          <stack.Screen options={{
+            headerShown: false
+          }} name='signup' component={SignUpScreen} />
+        </stack.Navigator>
+      </NavigationContainer>}
     </Provider>
   );
 }

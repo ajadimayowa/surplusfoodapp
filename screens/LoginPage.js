@@ -75,7 +75,9 @@ const LoginScreen = () => {
       const { user, idToken } = userData
       setUserInfo({ ...user, lastName: user?.familyName, firstName: user?.givenName, email: user?.email, id: user?.id, image: user.photo, accessToken: idToken, type: 'google' })
       navigation.replace("dashboard");
+      // await GoogleSignin.signOut();
     } catch (error) {
+      console.log('error',error)
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
         Alert.alert('user cancelled the login flow')

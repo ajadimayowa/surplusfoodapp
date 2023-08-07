@@ -43,16 +43,18 @@ export function Profile() {
   };
 
   const logUserOut = () => {
-    navigation.navigate('login');
+    console.log('Called')
+    // navigation.navigate('login');
   }
 
   const logOutGoogleUser = async () => {
     try {
-      await GoogleSignin.signOut();
+      // await GoogleSignin.signOut();
+      console.log('Google signed out!')
       await auth().signOut()
         .then(() => console.log('User signed out!'));
       setloggedInUser(null);
-      navigation.navigate('login');
+      // navigation.navigate('login');
     } catch (error) {
       Alert.alert(error.message)
     }
@@ -62,17 +64,17 @@ export function Profile() {
     const getCurrentUser = async () => {
       const currentUser = await GoogleSignin.getCurrentUser();
       currentUser.user.provider = 'google'
-      // console.log('currentUser', currentUser)
+      console.log('loggedInUser', loggedInUser.user.provider)
+      // console.log('curreoggedInUser?.userntUser', loggedInUser?.user?.provider)
       setloggedInUser(currentUser);
     };
     getCurrentUser()
     navigation.setOptions({
       headerTitle: "",
       headerRight: () => (
-
         <View style={{ paddingHorizontal: '5%' }}>
           <Pressable
-            onPress={() => loggedInUser?.user.provider === 'goolge' ? logOutGoogleUser() : logUserOut()}
+            onPress={() => loggedInUser?.user.provider === 'google' ? logOutGoogleUser() : logUserOut()}
             style={({ pressed }) => (pressed ? { opacity: 0.6 } : null)}
           >
             <Ionicons
@@ -81,6 +83,7 @@ export function Profile() {
               color={colors.primary}
             />
           </Pressable>
+          {loggedInUser?.user.provider && <Text>{loggedInUser?.user.provider}</Text>}
         </View>
       ),
     });
