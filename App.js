@@ -13,7 +13,7 @@ import { store } from './assets/store/store';
 import googleAuth from './google.config'
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 export default function App() {
