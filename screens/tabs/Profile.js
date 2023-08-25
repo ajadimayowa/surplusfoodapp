@@ -36,11 +36,11 @@ export function Profile() {
     setLoginModal(true);
   };
 
-  const handleUserLogin = () => {
-    getAuth?.token == ""
-      ? goHome()
-      : console.log("already logged in", getAuth?.token);
-  };
+  // const handleUserLogin = () => {
+  //   getAuth?.token == ""
+  //     ? goHome()
+  //     : console.log("already logged in", getAuth?.token);
+  // };
 
   const logUserOut = () => {
     console.log('Called')

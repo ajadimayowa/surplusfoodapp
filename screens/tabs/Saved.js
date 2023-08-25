@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export function Saved() {
   const loggedInUser = useSelector((currentUser)=>currentUser.auth.userInfo)
-  console.log(loggedInUser);
+  // console.log(loggedInUser);
   return (
     <SafeAreaView style={page.container}>
       <View>
