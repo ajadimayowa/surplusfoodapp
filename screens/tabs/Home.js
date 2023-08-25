@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Adverts } from "../../assets/contents";
 import AdCard from "../../assets/components/advertCard";
 import { Ionicons } from '@expo/vector-icons';
@@ -14,211 +14,233 @@ import Modal from "react-native-modal"
 import LoginModal from "../../assets/components/modals/loginModal";
 import SignInModal from "../../assets/components/modals/signInModal";
 import { useSelector } from "react-redux";
-import {View,FlatList,SafeAreaView,Text,StyleSheet,ActivityIndicator,ScrollView,Image,
+import {
+  View, FlatList, SafeAreaView, Text, StyleSheet, ActivityIndicator, ScrollView, Image,
   Button,
   Pressable,
   TextInput,
 } from "react-native";
 const services =
-[
-{serviceIcon:'cash-outline', title:'What we sell'},
-{serviceIcon:'help', title:'How it works'},
-{serviceIcon:'flash', title:'Hot deals'},
-{serviceIcon:'md-people', title:'Refer us'},
-]
+  [
+    { serviceIcon: 'cash-outline', title: 'What we sell' },
+    { serviceIcon: 'help', title: 'How it works' },
+    { serviceIcon: 'flash', title: 'Hot deals' },
+    { serviceIcon: 'md-people', title: 'Refer us' },
+  ]
 
-const locations =[
+const locations = [
   'V.Island', 'Lekki', 'Ikoyi', 'Ikeja', 'Ajah', 'Banana Island'
 ]
 
 const productCategories = [
-{catImage:tuber, title:'Tubers'},
-{catImage:pepper, title:'Pepper'},
-{catImage:flour, title:'Flours'},
-{catImage:oil, title:'Oil'},
-{catImage:provision, title:'Provisions'},
-{catImage:rice, title:'Rice'}
+  { catImage: tuber, title: 'Tubers' },
+  { catImage: pepper, title: 'Pepper' },
+  { catImage: flour, title: 'Flours' },
+  { catImage: oil, title: 'Oil' },
+  { catImage: provision, title: 'Provisions' },
+  { catImage: rice, title: 'Rice' }
 ]
 import { colors } from "../../assets/constants/colors";
 
 
-export function Home({navigation}) {
-const [loginModal,setLoginModal] = useState(false);
-const [signInModal,setSignInModal] = useState(false);
-const getAuth = useSelector((state)=>state.auth.userInfo)
+export function Home({ navigation }) {
+  const [loginModal, setLoginModal] = useState(false);
+  const [signInModal, setSignInModal] = useState(false);
 
-const handleUserLogin = ()=>{
-  getAuth?.token == '' ? setLoginModal(true) : console.log('already logged in',getAuth?.token ); 
-}
+  const getAuth = useSelector((state) => state.auth)
 
-const userSignin =()=>{
-  setSignInModal(true)
-}
+  const handleUserLogin = () => {
+    getAuth?.token == '' ? setLoginModal(true) : console.log('already logged in', getAuth?.provider);
+  }
 
-const handleEmailLogin = ()=>{
-  setLoginModal(false);
-  setSignInModal(true);
-}
+  useEffect(() => {
+    handleUserLogin()
+  }, [])
+  const userSignin = () => {
+    setSignInModal(true)
+  }
 
-  useLayoutEffect(()=>{
+  const handleEmailLogin = () => {
+    setLoginModal(false);
+    setSignInModal(true);
+  }
+
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
-      headerLeft: ()=><View style={{flexDirection:'row', gap:10}}>
-        <View style={{paddingHorizontal:10, elevation:2,
-      backgroundColor:'#fff', borderRadius:3,flexDirection:'row', height:40,width:'35%',alignItems:'center', justifyContent:'center'}}>
-        <Ionicons name="location-outline" size={18} color={colors.primary}/>
-        
-          
-      </View> 
-      <View style={{paddingHorizontal:10, elevation:2, flexDirection:'row',alignItems:'center',
-      backgroundColor:'#fff', borderRadius:3, height:40,width:'60%'}}>
-        <TextInput placeholder="Search grocery..." style={{width:'90%',color:'#5B5B5B'}}/>
-        <Pressable style={({pressed})=>pressed?{opacity:0.6}:null}>
-        <Ionicons name="search-outline" size={18} color={colors.primary}/>
-        </Pressable>
+      headerLeft: () => <View style={{ flexDirection: 'row', gap: 10 }}>
+        <View style={{
+          paddingHorizontal: 10, elevation: 2,
+          backgroundColor: '#fff', borderRadius: 3, flexDirection: 'row', height: 40, width: '35%', alignItems: 'center', justifyContent: 'center'
+        }}>
+          <Ionicons name="location-outline" size={18} color={colors.primary} />
+
+
+        </View>
+        <View style={{
+          paddingHorizontal: 10, elevation: 2, flexDirection: 'row', alignItems: 'center',
+          backgroundColor: '#fff', borderRadius: 3, height: 40, width: '60%'
+        }}>
+          <TextInput placeholder="Search grocery..." style={{ width: '90%', color: '#5B5B5B' }} />
+          <Pressable style={({ pressed }) => pressed ? { opacity: 0.6 } : null}>
+            <Ionicons name="search-outline" size={18} color={colors.primary} />
+          </Pressable>
+        </View>
       </View>
-      </View>
-      
+
     })
-  },[navigation])
+  }, [navigation])
   return (
     <>
-    <LoginModal on={loginModal} off={()=>setLoginModal(false)} emailLogin={handleEmailLogin}/>
-    <SignInModal on={signInModal} off={()=>setSignInModal(false)}/>
-    <SafeAreaView style={page.container}>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={Adverts}
-        renderItem={(ads) => <AdCard info={ads} />}
-        keyExtractor={(item) => item.id}
-        style={page.AdFlatList}
-        contentContainerStyle={page.advertCont}
-      />
-      
-      <ScrollView style={[page.scroll]}>
-        
-        <View style={page.bikeCard}>
-          <View style={
-            {justifyContent:'center',
-            alignItems:'center',
-            width:'40%'
-             }}>
-            <Text
-              style={{
-                fontFamily: "montserratBold",
-                fontSize: 15,
-                
-              }}
-            >
-              Need someone to run an errand?
-            </Text>
-          </View>
+      <LoginModal on={loginModal} off={() => setLoginModal(false)} emailLogin={handleEmailLogin} />
+      <SignInModal on={signInModal} off={() => setSignInModal(false)} />
+      <SafeAreaView style={page.container}>
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={Adverts}
+          renderItem={(ads) => <AdCard info={ads} />}
+          keyExtractor={(item) => item.id}
+          style={page.AdFlatList}
+          contentContainerStyle={page.advertCont}
+        />
 
-          <View style={
-            {justifyContent:'center',
-            alignItems:'flex-start',
-            width:'20%',
-            
-             }}>
-            <Image style={{height:70, width:70}} alt={'delivery'} source={require('../../assets/images/deliveryBike.png')}/>
-          </View>
-          <View style={
-            {justifyContent:'center',
-            alignItems:'center',
-            width:'40%',
-            
-             }}>
-            <Pressable onPress={handleUserLogin} style={({pressed})=>pressed? page.ButtonPressed : null}>
-              <View style={{backgroundColor:'#FBAF57', paddingVertical:10, paddingHorizontal:20,
-              borderRadius:15}}>
-                <Text style={{color:'black', fontFamily:'montserratRegular'}}>
-                  Send us
-                </Text>
-              </View>
-            </Pressable>
-          </View>
-        </View>
+        <ScrollView style={[page.scroll]}>
 
-        <View style={page.serviceCard}>
-          <View style={{alignItems:'flex-start', paddingHorizontal:5}}>
-            <Text
-              style={{
-                fontFamily: "montserratSemiBold",
-                fontSize: 12,
-              }}
-            >
-              Our Services
-            </Text>
-          </View>
-          <View style={{justifyContent:'center',alignItems:'center',
-          flex:1, flexDirection:'row'}}>
-            {
-              services.map((services, index)=>
-              <Pressable style={({pressed})=>pressed? {opacity:0.7}:null} key={index}>
-              <View style={{justifyContent:'center', alignItems:'center', marginHorizontal:7}} key={index}>
-                <View><Ionicons name={services.serviceIcon} size={35} color={colors.primary}/></View>
-                <Text style={{fontFamily:'montserratSemiBold', fontSize:12}}>{services.title}</Text>
-              </View>
-              </Pressable>
-                )
-            }
-          </View>
-  
-        </View>
-
-        <View style={page.categoryCard}>
-          <View style={{alignItems:'flex-start', paddingHorizontal:5, flexDirection:'row',
-          justifyContent:'space-between'}}>
-            <View>
+          <View style={page.bikeCard}>
+            <View style={
+              {
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '40%'
+              }}>
               <Text
-              style={{
-                fontFamily: "montserratSemiBold",
-                fontSize: 12,
-              }}
-            >
-              Shop categories
-            </Text>
-            
+                style={{
+                  fontFamily: "montserratBold",
+                  fontSize: 15,
+
+                }}
+              >
+                Need someone to run an errand?
+              </Text>
             </View>
-            <View style={{flexDirection:'row', alignItems:'center'}}>
-              <Pressable style={({pressed})=>pressed? {flexDirection:'row', alignItems:'center',opacity:0.7}:{flexDirection:'row', alignItems:'center'}}>
-            <Text
-              style={{
-                fontFamily: "montserratSemiBold",
-                fontSize: 12,
-                marginBottom:5,
-                marginRight:7
-              }}
-            >
-              More
-            </Text>
-            <Ionicons name='chevron-forward'/>
-            </Pressable>
+
+            <View style={
+              {
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                width: '20%',
+
+              }}>
+              <Image style={{ height: 70, width: 70 }} alt={'delivery'} source={require('../../assets/images/deliveryBike.png')} />
             </View>
-          </View>
-          <View style={{justifyContent:'center',paddingVertical:30,
-          flex:1, flexDirection:'row',gap:25, flexWrap:'wrap', width:'100%', minWidth:'100%'}}>
-            {
-              productCategories.map((category, index)=>
-              <Pressable style={({pressed})=>pressed? {opacity:0.7}:null} key={index}>
-              <View style={{justifyContent:'center',gap:8, alignItems:'center', marginHorizontal:7}} key={index}>
-                <View style={{justifyContent:'center', alignItems:'center',elevation:2, height:80, width:80,
-                borderRadius:60, backgroundColor:'#fff'}}>
-                  <Image source={category?.catImage}/>
+            <View style={
+              {
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '40%',
+
+              }}>
+              <Pressable onPress={handleUserLogin} style={({ pressed }) => pressed ? page.ButtonPressed : null}>
+                <View style={{
+                  backgroundColor: '#FBAF57', paddingVertical: 10, paddingHorizontal: 20,
+                  borderRadius: 15
+                }}>
+                  <Text style={{ color: 'black', fontFamily: 'montserratRegular' }}>
+                    Send us
+                  </Text>
                 </View>
-                <Text style={{fontFamily:'montserratSemiBold', fontSize:12}}>{category?.title}</Text>
-              </View>
               </Pressable>
-                )
-            }
+            </View>
           </View>
-  
-        </View>
-      </ScrollView>
-     
-      
-    </SafeAreaView>
+
+          <View style={page.serviceCard}>
+            <View style={{ alignItems: 'flex-start', paddingHorizontal: 5 }}>
+              <Text
+                style={{
+                  fontFamily: "montserratSemiBold",
+                  fontSize: 12,
+                }}
+              >
+                Our Services
+              </Text>
+            </View>
+            <View style={{
+              justifyContent: 'center', alignItems: 'center',
+              flex: 1, flexDirection: 'row'
+            }}>
+              {
+                services.map((services, index) =>
+                  <Pressable style={({ pressed }) => pressed ? { opacity: 0.7 } : null} key={index}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: 7 }} key={index}>
+                      <View><Ionicons name={services.serviceIcon} size={35} color={colors.primary} /></View>
+                      <Text style={{ fontFamily: 'montserratSemiBold', fontSize: 12 }}>{services.title}</Text>
+                    </View>
+                  </Pressable>
+                )
+              }
+            </View>
+
+          </View>
+
+          <View style={page.categoryCard}>
+            <View style={{
+              alignItems: 'flex-start', paddingHorizontal: 5, flexDirection: 'row',
+              justifyContent: 'space-between'
+            }}>
+              <View>
+                <Text
+                  style={{
+                    fontFamily: "montserratSemiBold",
+                    fontSize: 12,
+                  }}
+                >
+                  Shop categories
+                </Text>
+
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable style={({ pressed }) => pressed ? { flexDirection: 'row', alignItems: 'center', opacity: 0.7 } : { flexDirection: 'row', alignItems: 'center' }}>
+                  <Text
+                    style={{
+                      fontFamily: "montserratSemiBold",
+                      fontSize: 12,
+                      marginBottom: 5,
+                      marginRight: 7
+                    }}
+                  >
+                    More
+                  </Text>
+                  <Ionicons name='chevron-forward' />
+                </Pressable>
+              </View>
+            </View>
+            <View style={{
+              justifyContent: 'center', paddingVertical: 30,
+              flex: 1, flexDirection: 'row', gap: 25, flexWrap: 'wrap', width: '100%', minWidth: '100%'
+            }}>
+              {
+                productCategories.map((category, index) =>
+                  <Pressable style={({ pressed }) => pressed ? { opacity: 0.7 } : null} key={index}>
+                    <View style={{ justifyContent: 'center', gap: 8, alignItems: 'center', marginHorizontal: 7 }} key={index}>
+                      <View style={{
+                        justifyContent: 'center', alignItems: 'center', elevation: 2, height: 80, width: 80,
+                        borderRadius: 60, backgroundColor: '#fff'
+                      }}>
+                        <Image source={category?.catImage} />
+                      </View>
+                      <Text style={{ fontFamily: 'montserratSemiBold', fontSize: 12 }}>{category?.title}</Text>
+                    </View>
+                  </Pressable>
+                )
+              }
+            </View>
+
+          </View>
+        </ScrollView>
+
+
+      </SafeAreaView>
     </>
   );
 }
@@ -227,18 +249,18 @@ const page = StyleSheet.create({
   container: {
     backgroundColor: "red",
     width: "100%",
-    paddingVertical:'5%',
-    flex:1
+    paddingVertical: '5%',
+    flex: 1
   },
   scroll: {
-    marginTop:10,
+    marginTop: 10,
     width: "100%",
-    paddingHorizontal:10
+    paddingHorizontal: 10
   },
   bikeCard: {
     display: "flex",
-    flexDirection:'row',
-    justifyContent:'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
     padding: 10,
     width: "100%",
     minHeight: 100,
@@ -259,9 +281,9 @@ const page = StyleSheet.create({
     display: "flex",
     padding: 10,
     width: "100%",
-    minWidth : '100%',
-    paddingVertical:20,
-    paddingHorizontal:20,
+    minWidth: '100%',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
     marginTop: 20,
     borderRadius: 10,
     backgroundColor: "pink",
@@ -277,12 +299,12 @@ const page = StyleSheet.create({
   },
 
   AdFlatList: {
-    marginTop:15,
+    marginTop: 15,
     height: 150,
     flexGrow: 0,
   },
   trendingFlatList: {
-    marginTop:15,
+    marginTop: 15,
     height: 200,
     flexGrow: 0,
   },
@@ -296,10 +318,10 @@ const page = StyleSheet.create({
     gap: 20,
     alignItems: "center",
     padding: 10,
-    backgroundColor:'red'
+    backgroundColor: 'red'
   },
-  ButtonPressed :{
-opacity:0.7
+  ButtonPressed: {
+    opacity: 0.7
   },
 
   text: {

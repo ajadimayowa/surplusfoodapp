@@ -11,7 +11,6 @@ import auth from '@react-native-firebase/auth';
 import Navigation from './navigation';
 
 
-
 export default function App() {
   const [signedIn, setsignedIn] = useState(false)
   const [initializing, setInitializing] = useState(true);

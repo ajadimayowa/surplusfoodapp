@@ -1,25 +1,33 @@
-import { USER_LOGIN, GET_USER } from "../actionTypes";
+import { USER_LOGIN, GET_USER, USER_LOGOUT } from "../actionTypes";
 
 
 
 const initialState = {
-    userData: {},
+    user: {},
     token: '',
+    provider: '',
 };
 
 const userReducer = (state = initialState, action) => {
-    // console.log('action', action)
     switch (action.type) {
         case USER_LOGIN:
             return {
                 ...state,
-                userData: action.payload.payload,
+                user: action.payload.data,
                 token: action.payload.token,
+                provider: action.payload.provider
             };
         case GET_USER:
             return {
                 ...state,
-                userData: action.payload,
+                user: action.payload,
+            };
+        case USER_LOGOUT:
+            return {
+                ...state,
+                user: {},
+                token: '',
+                provider: ''
             };
         default:
             return state;

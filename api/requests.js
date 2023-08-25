@@ -10,19 +10,6 @@ export const sendList =(userList) => {
 
 const API_KEY = 'AIzaSyAegImF2nb4zZGAzRJ5BY7D8uMVKD9kv7M';
 
-export const logUserIn = async (userInfo)=>{
-    const body = {
-        ...userInfo,
-        returnSecureToken : true
-    }
-
-    // console.log(body);
-    const res = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, body);
-    
-    return res;
-
-
-}
 
 export const createUser = async (userInfo)=>{
     // console.log(userInfo)

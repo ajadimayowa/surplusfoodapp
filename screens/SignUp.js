@@ -22,7 +22,8 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import { moderateVerticalScale } from 'react-native-size-matters';
+import { ScaledSheet, moderateVerticalScale } from 'react-native-size-matters';
+import { onBoardUser } from "../api/user";
 
 
 export function SignUpScreen({ navigation }) {
@@ -36,6 +37,7 @@ export function SignUpScreen({ navigation }) {
     lastName: "",
     phone: "",
     type: '',
+    gender: '',
   });
   const [googleUserData, setgoogleUserData] = useState({})
   const [borderErrorEmail, setBorderErrorEmail] = useState(false);
@@ -45,8 +47,8 @@ export function SignUpScreen({ navigation }) {
   const [borderErrorLastName, setBorderErrorLastName] = useState(false);
   const [borderErrorPhone, setBorderErrorPhone] = useState(false);
   const [passwordNotEqual, setPasswordNotEqual] = useState(false);
-  const [secure, setSecure] = useState(false);
-  const [secureC, setSecureC] = useState(false);
+  const [secure, setSecure] = useState(true);
+  const [secureC, setSecureC] = useState(true);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -59,56 +61,76 @@ export function SignUpScreen({ navigation }) {
   }, [navigation]);
 
   const handleCreateUser = async () => {
-    if (userInfo.email == "") {
-      setBorderErrorEmail(true);
-
-    }
-    if (!userInfo.email.includes("@")) {
-      setBorderErrorEmail(true);
-    }
-    if (userInfo.password == "") {
-      setBorderErrorPassword(true);
-    }
-    if (userInfo.cPassword == "") {
-      setBorderErrorCPassword(true);
-    }
-    if (userInfo.cPassword !== userInfo.password) {
-      setPasswordNotEqual(true);
-      setBorderErrorCPassword(true);
-    }
-    if (userInfo.firstName == "") {
-      setBorderErrorFirstName(true);
-    }
-    if (userInfo.lastName == "") {
-      setBorderErrorLastName(true);
-    }
-    if (userInfo.phone == "") {
-      setBorderErrorPhone(true);
-    }
-    if (userInfo.phone.length < 11) {
-      setBorderErrorPhone(true);
-    } else if (
-      userInfo.firstName != "" &&
-      userInfo.lastName != "" &&
-      userInfo.email != "" &&
-      userInfo.email.includes("@") &&
-      userInfo.phone != "" &&
-      userInfo.password != "" &&
-      userInfo.cPassword == userInfo.password &&
-      userInfo.cPassword != ""
-    ) {
-      setLoading(true);
-      try {
-        const res = await createUser(userInfo);
-        console.log(res);
-        if (res?.status == 200) {
-          setLoading(false);
-          setSuccess(true);
-        }
-      } catch (error) {
-        setLoading(false);
-        Alert.alert('Registration Failed, Try Again');
+    try {
+      if (userInfo.email == "") {
+        setBorderErrorEmail(true);
       }
+      if (!userInfo.email.includes("@")) {
+        setBorderErrorEmail(true);
+      }
+      if (userInfo.password == "") {
+        setBorderErrorPassword(true);
+      }
+      if (userInfo.cPassword == "") {
+        setBorderErrorCPassword(true);
+      }
+      if (userInfo.cPassword !== userInfo.password) {
+        setPasswordNotEqual(true);
+        setBorderErrorCPassword(true);
+      }
+      if (userInfo.firstName == "") {
+        setBorderErrorFirstName(true);
+      }
+      if (userInfo.lastName == "") {
+        setBorderErrorLastName(true);
+      }
+      if (userInfo.phone == "") {
+        setBorderErrorPhone(true);
+      }
+      if (userInfo.phone.length < 11) {
+        setBorderErrorPhone(true);
+      } else if (
+        userInfo.firstName != "" &&
+        userInfo.lastName != "" &&
+        userInfo.email != "" &&
+        userInfo.email.includes("@") &&
+        userInfo.phone != "" &&
+        userInfo.password != "" &&
+        userInfo.cPassword == userInfo.password &&
+        userInfo.cPassword != ""
+      ) {
+        setLoading(true);
+
+        const formData = {
+          "full_name": `${userInfo.firstName} ${userInfo.lastName}`,
+          "gender": "string",
+          // "image": {
+          //   "location": "string",
+          //   "key": "string"
+          // },
+          provider: "self",
+          "email": userInfo.email,
+          "password": userInfo.password,
+          "repeat_password": userInfo.cPassword,
+          "mobile": userInfo.phone,
+          date_of_birth: new Date()
+        }
+
+        const response = await onBoardUser(formData);
+        console.log(response);
+        if (response && response.success === true) {
+          setSuccess(true);
+          setLoading(false);
+        }
+        else {
+          setLoading(false);
+          setSuccess(false);
+          Alert.alert(`${response.message}`);
+        }
+      }
+    } catch (error) {
+      setLoading(false);
+      Alert.alert(`${error.message}`);
     }
   };
 
@@ -422,10 +444,10 @@ export function SignUpScreen({ navigation }) {
                 backgroundColor: colors.primary,
                 justifyContent: "center",
                 alignItems: "center",
-                height: 45,
-                paddingHorizontal: 40,
-                paddingVertical: 10,
-                borderRadius: 5,
+                height: moderateVerticalScale(45),
+                paddingHorizontal: moderateVerticalScale(40),
+                paddingVertical: moderateVerticalScale(10),
+                borderRadius: moderateVerticalScale(5),
               }}
             >
               <Text style={{ color: "#fff", fontFamily: "montserratSemiBold" }}>
@@ -440,16 +462,16 @@ export function SignUpScreen({ navigation }) {
           >
             <View
               style={{
-                marginBottom: 15,
+                marginBottom: moderateVerticalScale(15),
                 elevation: 2,
                 backgroundColor: colors.white,
                 flexDirection: 'row',
                 justifyContent: "center",
                 alignItems: "center",
                 height: moderateVerticalScale(45),
-                paddingHorizontal: 40,
-                paddingVertical: 10,
-                borderRadius: 5,
+                paddingHorizontal: moderateVerticalScale(40),
+                paddingVertical: moderateVerticalScale(10),
+                borderRadius: moderateVerticalScale(5),
               }}
             >
               <Image
@@ -457,7 +479,7 @@ export function SignUpScreen({ navigation }) {
                 alt={"delivery"}
                 source={require("../assets/images/search.png")}
               />
-              <Text style={{ color: colors.primary, fontSize: moderateVerticalScale(15),fontFamily: "montserratSemiBold" }}>
+              <Text style={{ color: colors.primary, fontSize: moderateVerticalScale(15), fontFamily: "montserratSemiBold" }}>
                 {loading ? <ActivityIndicator /> : 'Sign Up With Google'}
               </Text>
             </View>
@@ -467,9 +489,9 @@ export function SignUpScreen({ navigation }) {
           style={{
             width: "100%",
             flexDirection: "row",
-            paddingVertical: 5,
+            paddingVertical: moderateVerticalScale(5),
             justifyContent: "center",
-            gap: 5,
+            gap: moderateVerticalScale(5),
           }}
         >
           <Text style={{ fontFamily: "montserratRegular" }}>
@@ -492,15 +514,15 @@ export function SignUpScreen({ navigation }) {
   );
 }
 
-const page = StyleSheet.create({
+const page = ScaledSheet.create({
   container: {
-    padding: 10,
+    padding: '10@msr',
     backgroundColor: "#fff",
     minWidth: "100%",
     flexL: 1,
   },
   text: {
-    fontSize: 30,
+    fontSize: '30@msr',
     color: "#000",
   },
 });

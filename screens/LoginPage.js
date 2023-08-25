@@ -13,18 +13,18 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-import Modal from "react-native-modal";
 import { colors } from "../assets/constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
-import { logUserIn } from "../api/requests";
+import { useDispatch, useSelector } from "react-redux";
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { moderateVerticalScale, ScaledSheet } from 'react-native-size-matters';
+import { signInUser } from "../api/user";
+import { loginUserAction } from "../redux/actions/userAction";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -34,13 +34,19 @@ const LoginScreen = () => {
   const [invalidMail, setInValidMail] = useState(false);
   const [authFail, setAuthFail] = useState(false);
   const [emptyPass, setEmptyPass] = useState(false);
+  const [message, setmessage] = useState('')
+  const [success, setsuccess] = useState(false)
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
   });
 
+  const state = useSelector(state => state.user)
+  // console.log('state', state.userData)
+
   const handleUserLogin = async () => {
     // console.log(userInfo.email);
+    setmessage('')
     if (!userInfo.email.includes("@")) {
       setInValidMail(true);
       return;
@@ -48,19 +54,40 @@ const LoginScreen = () => {
     if (userInfo.email == "") {
       console.log("Field cannot be empty");
     }
-
     if (userInfo.password == "") {
       setEmptyPass(true);
       return;
     } else {
+      setmessage('')
       setLoading(true);
       try {
-        const res = await logUserIn(userInfo);
-        if (res?.status == 200) {
+        const response = await signInUser(userInfo)
+        if (response && response.success === true) {
+          setmessage(response.message)
+          setsuccess(response.success)
+          const actionData = {
+            data: response.data,
+            token: response.token,
+            provider: 'self'
+          }
+          dispatch(loginUserAction(actionData))
+          setTimeout(() => {
+            setLoading(false);
+          }, 500);
           navigation.replace("dashboard");
         }
+        else {
+          setLoading(false);
+          setmessage(response?.message)
+          setsuccess(false)
+        }
+        // if (res?.status == 200) {
+        //   navigation.replace("dashboard");
+        // }
       } catch (error) {
-        setAuthFail(true);
+        // setAuthFail(true);
+        setmessage(error?.message)
+        setsuccess(false)
         setLoading(false);
       }
     }
@@ -77,7 +104,7 @@ const LoginScreen = () => {
       navigation.replace("dashboard");
       // await GoogleSignin.signOut();
     } catch (error) {
-      console.log('error',error)
+      console.log('error', error)
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
         Alert.alert('user cancelled the login flow')
@@ -229,6 +256,13 @@ const LoginScreen = () => {
               </Text>
             </View>
           ) : null}
+          {message ? (
+            <View style={{ width: "100%", paddingHorizontal: "3%" }}>
+              <Text style={{ color: success === true ? colors.primary : "red" }}>
+                {message}
+              </Text>
+            </View>
+          ) : null}
 
           <View
             style={{
@@ -269,7 +303,7 @@ const LoginScreen = () => {
             </View>
           </Pressable>
           <Pressable onPress={signInWithGoogle} style={{ width: "100%" }}>
-          <View
+            <View
               style={{
                 marginBottom: 15,
                 elevation: 2,
