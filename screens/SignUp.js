@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../assets/constants/colors";
-import { createUser } from "../assets/controllers/requests";
+import { createUser } from "../api/requests";
 import SuccessModal from "../assets/components/modals/successModal";
 import {
   GoogleSignin,

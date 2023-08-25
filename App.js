@@ -4,11 +4,11 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
-import { store, persistor } from './assets/redux/index'
+import { store, persistor } from './redux/index'
 import googleAuth from './google.config'
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import Navigation from './assets/navigation';
+import Navigation from './navigation';
 
 
 

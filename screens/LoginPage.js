@@ -18,7 +18,7 @@ import { colors } from "../assets/constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { logUserIn } from "../assets/controllers/requests";
+import { logUserIn } from "../api/requests";
 import {
   GoogleSignin,
   GoogleSigninButton,

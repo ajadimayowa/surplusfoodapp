@@ -18,8 +18,7 @@ import Modal from "react-native-modal";
 import { colors } from "../../constants/colors";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { handleLogin } from "../../controllers/requests";
-import { loginUser } from "../../store/slices/authSlice";
+import { handleLogin } from "../../../api/requests";
 import { useNavigation } from "@react-navigation/native";
 
 const SignInModal = ({ on, off }) => {
@@ -36,7 +35,7 @@ const SignInModal = ({ on, off }) => {
 
   const handleUserLogin = () => {
     handleLogin(userInfo);
-    dispatch(loginUser(userInfo));
+    // dispatch(loginUser(userInfo));
   };
 
   return (
