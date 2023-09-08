@@ -2,7 +2,7 @@ import axios from "axios";
 import { apiUrl } from "./host";
 import { getValidToken } from "./token";
 import Base64 from 'Base64';
- 
+
 const encoded = Base64.btoa('floathhub@gmail.com:e2b1b93e3082485a308992c8c30e06c1');
 
 
@@ -26,10 +26,10 @@ export const useAxiosForm = axios.create({
 export async function setToken() {
     const token = await getValidToken()
     if (token) {
-        useAxios.defaults.headers.common["token"] = `Bearer ${token}`;
+        useAxios.defaults.headers.common["Authorization"] = `Basic ${encoded}`;
         useAxiosForm.defaults.headers.common["token"] = `Bearer ${token}`;
     } else {
-        delete useAxios.defaults.headers.common["token"];
+        delete useAxios.defaults.headers.common["Authorization"];
         delete useAxiosForm.defaults.headers.common["token"];
     }
 }
